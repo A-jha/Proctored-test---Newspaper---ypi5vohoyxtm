@@ -66,6 +66,12 @@ const News = () => {
         <input
           type="text"
           value={userQuery}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              onPressEnter();
+              setSearchTerm("");
+            }
+          }}
           onChange={(e) => setUserQuery(e.target.value)}
         />
         {/* <select value={country} onChange={(e) => setCountry(e.target.value)}>
@@ -81,6 +87,12 @@ const News = () => {
           type="text"
           value={country}
           onChange={(e) => setCountry(e.target.value)}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              onPressEnter();
+              setSearchTerm("");
+            }
+          }}
         />
         <button type="submit" onClick={handleSubmit}>
           Submit
