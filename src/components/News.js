@@ -69,7 +69,7 @@ const News = () => {
           onKeyPress={(e) => {
             if (e.key === "Enter") {
               onPressEnter();
-              setSearchTerm("");
+              setUserQuery("");
             }
           }}
           onChange={(e) => setUserQuery(e.target.value)}
@@ -90,7 +90,7 @@ const News = () => {
           onKeyPress={(e) => {
             if (e.key === "Enter") {
               onPressEnter();
-              setSearchTerm("");
+              setCountry("");
             }
           }}
         />
