@@ -2,18 +2,33 @@ import React, { useEffect, useState } from "react";
 
 const News = () => {
   const [userQuery, setUserQuery] = useState("example");
-  const [country, setCountry] = useState("ar");
+  const [country, setCountry] = useState("India");
   const [articles, setArticles] = useState([]);
+  const [minLan, setMinLan] = useState("Hin");
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(userQuery, country);
+    try {
+      const lang = languages.map((language) => {
+        if (language.name.toUpperCase() === country.toUpperCase()) {
+          return language._n;
+        }
+      });
+      if (lang) {
+        setMinLan(lang);
+      }
+    } catch {
+      setMinLan("Hin");
+    }
     fetchNews();
+    setUserQuery("");
+    setCountry("");
   };
   let url = `https://gnews.io/api/v4/search?q=${userQuery}&token=b71e47efe2458a4900463f1993be24b9&lang=${country}`;
   const fetchNews = async () => {
     try {
       const response = await fetch(
-        `https://gnews.io/api/v4/search?q=${userQuery}&token=b71e47efe2458a4900463f1993be24b9&lang=${country}`
+        `https://gnews.io/api/v4/search?q=${userQuery}&token=b71e47efe2458a4900463f1993be24b9&lang=${minLan}`
       );
       const news = await response.json();
       //   console.log(news);
@@ -36,7 +51,7 @@ const News = () => {
           value={userQuery}
           onChange={(e) => setUserQuery(e.target.value)}
         />
-        <select value={country} onChange={(e) => setCountry(e.target.value)}>
+        {/* <select value={country} onChange={(e) => setCountry(e.target.value)}>
           {languages.map((language) => {
             return (
               <option key={language._n} value={language._n}>
@@ -44,13 +59,18 @@ const News = () => {
               </option>
             );
           })}
-        </select>
+        </select> */}
+        <input
+          type="text"
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
+        />
         <button type="submit">Submit</button>
       </form>
       <div className="newsCont">
         {articles.map((article) => {
           return (
-            <div>
+            <div key={article.url}>
               <h3>{article.title}</h3>
               <p>{article.description}</p>
             </div>
