@@ -9,7 +9,7 @@ const News = () => {
     e.preventDefault();
     console.log(userQuery, country);
     try {
-      const lang = languages.map((language) => {
+      const lang = languages.forEach((language) => {
         if (language.name.toUpperCase() === country.toUpperCase()) {
           return language._n;
         }
@@ -68,14 +68,18 @@ const News = () => {
         <button type="submit">Submit</button>
       </form>
       <div className="newsCont">
-        {articles.map((article) => {
-          return (
-            <div key={article.url}>
-              <h3>{article.title}</h3>
-              <p>{article.description}</p>
-            </div>
-          );
-        })}
+        {articles ? (
+          articles.map((article) => {
+            return (
+              <div key={article.url}>
+                <h3>{article.title}</h3>
+                <p>{article.description}</p>
+              </div>
+            );
+          })
+        ) : (
+          <h1>hi</h1>
+        )}
       </div>
     </div>
   );
