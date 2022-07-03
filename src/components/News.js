@@ -68,7 +68,6 @@ const News = () => {
           value={userQuery}
           onKeyPress={(e) => {
             if (e.key === "Enter") {
-              onPressEnter();
               setUserQuery("");
             }
           }}
@@ -89,7 +88,6 @@ const News = () => {
           onChange={(e) => setCountry(e.target.value)}
           onKeyPress={(e) => {
             if (e.key === "Enter") {
-              onPressEnter();
               setCountry("");
             }
           }}
