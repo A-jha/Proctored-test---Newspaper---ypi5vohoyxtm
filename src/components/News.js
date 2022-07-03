@@ -5,7 +5,7 @@ const News = () => {
   const [country, setCountry] = useState("India");
   const [articles, setArticles] = useState([]);
   const [minLan, setMinLan] = useState("Hin");
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(userQuery, country);
     try {
@@ -20,10 +20,27 @@ const News = () => {
     } catch {
       setMinLan("Hin");
     }
-    fetchNews();
+    await fetchNews();
     setUserQuery("");
     setCountry("");
   };
+  const handleSubmitEng = async (e) => {
+    e.preventDefault();
+    setMinLan("en");
+    setUserQuery("example");
+    await fetchNews();
+    setUserQuery("");
+    setCountry("");
+  };
+  const handleSubmitHin = async (e) => {
+    e.preventDefault();
+    setMinLan("hi");
+    setUserQuery("example");
+    await fetchNews();
+    setUserQuery("");
+    setCountry("");
+  };
+
   let url = `https://gnews.io/api/v4/search?q=${userQuery}&token=b71e47efe2458a4900463f1993be24b9&lang=${country}`;
   const fetchNews = async () => {
     try {
@@ -45,7 +62,7 @@ const News = () => {
   }, []);
   return (
     <div>
-      <form className="searchCont" onSubmit={handleSubmit}>
+      <form className="searchCont">
         <input
           type="text"
           value={userQuery}
@@ -65,7 +82,15 @@ const News = () => {
           value={country}
           onChange={(e) => setCountry(e.target.value)}
         />
-        <button type="submit">Submit</button>
+        <button type="submit" onClick={handleSubmit}>
+          Submit
+        </button>
+        <button type="submit" onClick={handleSubmitEng} data-testid="lang-en">
+          Eng
+        </button>
+        <button type="submit" onClick={handleSubmitHin} data-testid="lang-hi">
+          hin
+        </button>
       </form>
       <div className="newsCont">
         {articles ? (
@@ -78,7 +103,7 @@ const News = () => {
             );
           })
         ) : (
-          <h1>hi</h1>
+          <h1>No article Found</h1>
         )}
       </div>
     </div>
